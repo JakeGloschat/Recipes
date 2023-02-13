@@ -7,7 +7,7 @@
 
 import Foundation
 
-class RecipeCategory {
+class RecipeCategory: Encodable, Decodable {
     
     let id: UUID
     var title: String

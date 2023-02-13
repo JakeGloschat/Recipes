@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Recipe {
+class Recipe: Encodable, Decodable {
     
     let id: UUID
     var title: String
@@ -15,7 +15,7 @@ class Recipe {
     var calories: Int?
     var cookTime: Int?
     
-    init(id: UUID = UUID (), title: String, description: String, calories: Int? = nil, cookTime: Int? = nil) {
+    init(id: UUID = UUID (), title: String, description: String, calories: Int?, cookTime: Int?) {
         self.id = id
         self.title = title
         self.description = description
@@ -24,3 +24,9 @@ class Recipe {
     }
     
 } // End of Class
+
+extension Recipe: Equatable {
+    static func == (lhs: Recipe, rhs: Recipe) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
