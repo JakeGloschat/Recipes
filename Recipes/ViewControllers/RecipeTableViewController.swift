@@ -37,7 +37,7 @@ class RecipeTableViewController: UITableViewController {
         
         let recipe = category?.recipes[indexPath.row]
         cell.recipe = recipe
-        
+        cell.delegate = self // Step 7 - Set the delegate
         return cell
     }
     
@@ -67,5 +67,13 @@ class RecipeTableViewController: UITableViewController {
         let indexPath = IndexPath(row: newRow, section: 0)
         tableView.insertRows(at: [indexPath], with: .automatic)
     }
-    
+}
+// step 5 - Adopt the protocol
+extension RecipeTableViewController: RecipeTableViewCellDelegate {
+    func toggleFavoriteButtonTapped(cell: RecipeTableViewCell) {
+        // step 6 - Implement the protocol method
+        guard let recipe = cell.recipe else { return }
+        RecipeController.toggleFavorite(recipe: recipe)
+        cell.updateViews()
+    }
 }

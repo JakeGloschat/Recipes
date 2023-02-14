@@ -18,9 +18,14 @@ class RecipeDetailViewController: UIViewController {
     // MARK: - Properties
     var recipe: Recipe?
     
-    // MARK: - Methods
+    // MARK: - lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        updateViews()
+    }
+      
+    // MARK: - Helper
+    func updateViews() {
         guard let recipe = recipe else { return }
         recipeTitleTextField.text = recipe.title
         recipeDescriptionTextField.text = recipe.description
@@ -31,6 +36,9 @@ class RecipeDetailViewController: UIViewController {
             cookTimeTextField.text = "\(cookTime)"
         }
     }
+    // MARK: - Methods
+
+    
     
     @IBAction func saveButtonTapped(_ sender: Any) {
         guard let recipe = recipe,
