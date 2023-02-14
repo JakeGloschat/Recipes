@@ -24,3 +24,4 @@ extension RecipeCategory: Equatable {
         return lhs.id == rhs.id
     }
 }
+
