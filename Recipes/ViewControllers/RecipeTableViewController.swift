@@ -10,8 +10,6 @@ import UIKit
 class RecipeTableViewController: UITableViewController {
     
     @IBOutlet weak var categoryNameTextField: UITextField!
-    
-    let recipeCategoryController = RecipeCategoryController.shared
     var category: RecipeCategory?
 
     // MARK: - Lifecycle Methods
@@ -25,7 +23,7 @@ class RecipeTableViewController: UITableViewController {
         super.viewWillDisappear(animated)
         guard let category = category,
             let newTitle = categoryNameTextField.text else { return }
-        recipeCategoryController.updateRecipeCategory(category: category, title: newTitle)
+        RecipeCategoryController.shared.updateRecipeCategory(category: category, title: newTitle)
     }
 
     // MARK: - Table view data source
@@ -35,14 +33,11 @@ class RecipeTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeCell", for: indexPath)
-        guard let recipe = category?.recipes[indexPath.row] else { return cell }
-        cell.textLabel?.text = recipe.title
-        if let calories = recipe.calories {
-            cell.detailTextLabel?.text = "\(calories) Cal"
-        } else {
-            cell.detailTextLabel?.text = nil
-        }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeCell", for: indexPath) as? RecipeTableViewCell else { return UITableViewCell()}
+        
+        let recipe = category?.recipes[indexPath.row]
+        cell.recipe = recipe
+        
         return cell
     }
     
